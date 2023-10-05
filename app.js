@@ -1,26 +1,20 @@
 const http =require('http');
 const express = require('express');
-const app  = express();
+
 const bodyParser  = require('body-parser');
+const app  = express();
+
+
+const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
 app.use(bodyParser.urlencoded({extended:false}));
 
-app.use('/',(req,res,next)=>{
-    console.log("in the middle ware");
-    res.send('<h1>hello from express home page js</h1>');
-   // next();
-    });
+app.use('/admin',adminRoutes);
+app.use('/shop',shopRoutes);
 
-app.use('/add',(req, res ,next)=>{
-        console.log("in 2nd middle ware");
-        res.send('<form action="/product" method = "POST"><input type ="text" name="title" ><button type = "submit">add</button></form>');
-       res.send('<h1>hello from express add page js</h1>');
-    });
-
-app.use('/product',(req, res ,next)=>{
-     console.log(req.body);
-    res.redirect('/');
-    });
-    
+app.use((req,res,next)=>{
+    res.status(404).send('<h1>NOt Found</h1>');
+})
 const server = http.createServer(app);
 
 server.listen(3000);
