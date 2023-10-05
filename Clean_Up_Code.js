@@ -6,7 +6,18 @@
 //     return hobby;
 // }))
 const http =require('http');
-const routes  = require('./routes');
-const server = http.createServer(routes);
-console.log(routes.someText);
+const express = require('express');
+const app  = express();
+// const routes  = require('./routes');
+app.use((req,res,next)=>{
+console.log("in the middle ware");
+next();
+});
+app.use((req, res ,next)=>{
+    console.log("in 2nd middle ware");
+    res.send('<h1>hello from express  js</h1>')
+})
+ const server = http.createServer(app);
+
+//console.log(routes.someText);
 server.listen(3000);
