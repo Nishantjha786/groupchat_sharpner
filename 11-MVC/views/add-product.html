@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add product page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body class="text-bg-warning bg-opacity-25">
+    <div class="container-sm mt-5 w-50">
+        <div class="card">
+            <div class="card-header bg-primary text-white text-center p-3">
+                <h2>Add product to Page</h2>
+            </div>
+            <div class="card-body bg-white">
+                <form id="myForm" method="post" action="/admin/listed-product">
+                    <div class="form-group">
+                        <label for="pName" class="form-label">Product Name</label>
+                        <input type="text" class="form-control" name="productName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pQuantity" class="form-label">Product Quantity</label>
+                        <input type="number" class="form-control" name="pQuantity" required>
+                    </div>
+                    <div class="form-group text-center mt-3">
+                        <button class="btn btn-success">Add Product</button>
+                    </div>
+                    <div class="form-group text-center m-2">
+                        <a href="/">back to home</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
