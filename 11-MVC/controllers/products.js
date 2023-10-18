@@ -6,6 +6,11 @@ exports.addProduct = (request, response, next) => {
     // Send a response just for /add-product incoming requests
     response.sendFile('add-product.html', { root: 'views' });
 }
+exports.getproduct=(req,res,next)=>{
+    const prodId = req.params.pid;  //productId
+   product.findbyId((prodId));
+    res.redirect('/');
+}
 
 exports.listProduct = (request, response, next) => {
     //get body to pass to browser

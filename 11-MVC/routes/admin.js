@@ -3,6 +3,7 @@ const express = require('express');
 const fs = require('fs');
 
 const productController = require('../controllers/products')
+const shopController  =require('../controllers/products');
 
 //CREATE AN INSTANCE OF Router
 const router = express.Router();
@@ -13,6 +14,6 @@ router.get('/add-product',productController.addProduct)
 //DEFINE A ROUTE FOR THE /admin/product PATH
 router.post('/listed-product',productController.listProduct)
 
-
+router.get('/product/:productId',shopController.getproduct);
 //EXPORT CREATED MODULE
 module.exports = router;
