@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add product page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css">
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body class="text-bg-warning bg-opacity-25">
+  <nav class="nav navbar navbar-expand-lg text-bg-danger col-12">
+    <div class="container">
+        <img src="/images/sellHere2.jpg" alt="brand-image" class=" me-3" width="40px" height="40px">
+      <a href="/admin" class="navbar-brand">
+        <h2 class="fw-bold fst-italic">Sell <span class="text-danger fs-1">H</span>ere</h2>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navmenu">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a href="/admin/add-product" class="nav-link fs-4">Add Product</a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/listed-product" class="nav-link fs-4">View Products</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link fs-4">Account</a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin" class="nav-link fs-4">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="/" class="nav-link fs-4">Log Out</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+    <div class="container-sm mt-5 mb-5 col-lg-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white text-center p-3">
+                <h2>Add product to Page</h2>
+            </div>
+            <div class="card-body bg-white ">
+                <form id="myForm" method="post" action="/admin/listed-product">
+                    <div class="form-group mt-3 fs-5 ">
+                        <label for="pName" class="form-label">Product Name</label>
+                        <input type="text" class="form-control" name="productName" id="fName" required>
+                    </div>
+                    <div class="form-group mt-3 fs-5">
+                        <label for="pQuantity" class="form-label">Product Quantity</label>
+                        <input type="number" class="form-control" name="pQuantity" id="fQuantity"  required>
+                    </div>
+                    <div class="form-group mt-3 fs-5">
+                        <label for="pPrice" class="form-label">Product Price</label>
+                        <input type="number" class="form-control" name="pPrice" id="fPrice"  required>
+                    </div>
+                    <div class="form-group mt-3 fs-5">
+                        <label for="pImage" class="form-label">Product Image</label>
+                        <input type="file" class="form-control" name="file" id="file">
+                    </div>
+                    <div class="form-group mt-3 fs-5">
+                        <label for="pQuantity" class="form-label">Product Description</label>
+                        <textarea class="form-control" id="fDescription" rows="5" name="pDescription" required></textarea>
+                    </div>
+                    <input type="hidden" class="form-control" name="id" id="fId">
+                    <input type="hidden" class="form-control" name="imgID" id="imgID">
+                    <div class="form-group text-center mt-3">
+                        <button class="btn btn-lg mt-3 btn-success" id="submitBtn">Add Product</button>
+                    </div>
+                    <div class="form-group text-center m-2">
+                        <a href="/">back to home</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class=" card mb-5"></div>
+<footer class="bg-light py-4 fixed-bottom">
+  <!-- Footer Content Here -->
+  <div class="container text-center">
+      <p>&copy; 2023 SellHere. All rights reserved.</p>
+  </div>
+</footer>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+<script src="/js/form.js"></script>
+</html>
