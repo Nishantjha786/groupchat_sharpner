@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Listing</title>
+    <!-- Add Bootstrap CSS link -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css">
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="text-bg-warning bg-opacity-25">
+
+  <nav class="nav navbar navbar-expand-lg text-bg-danger col-12">
+    <div class="container">
+        <img src="/images/sellHere2.jpg" alt="brand-image" class=" me-3" width="40px" height="40px">
+      <a href="/user/cart" class="navbar-brand">
+        <h2 class="fw-bold fst-italic">Sell <span class="text-danger fs-1">H</span>ere</h2>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navmenu">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a href="/user/listed-product" class="nav-link fs-4">View Products</a>
+          </li>
+          <li class="nav-item">
+            <a href="/user/cart" class="nav-link fs-4">Cart</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link fs-4">Account</a>
+          </li>
+          <li class="nav-item">
+            <a href="/user" class="nav-link fs-4">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="/" class="nav-link fs-4">Log Out</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container col-md-10" id="placeholder">
+    <h1 class="my-4 text-center">Order History</h1>
+    <!-- <div class="card my-3">
+        <div class="card-header d-flex justify-content-between">
+            <div class="ms-2">
+                <h5>Order #1</h5>
+            </div>
+            <div class="me-5">
+                <h5>Date & Time:21/10/1996,9:55 PM</h5>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table ">
+                <thead >
+                    <tr>
+                        <th class="col-2">#</th>
+                        <th class="col-5">Item Name</th>
+                        <th class="col-4">Price</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody >
+                    
+                    <tr>
+                        <td>1</td>
+                        <td>Item A</td>
+                        <td>&#8377;10.00</td>
+                        <td>2</td>
+                    </tr>
+                   
+                    <tr>
+                        <td>2</td>
+                        <td>Item B</td>
+                        <td>&#8377;15.00</td>
+                        <td>3</td>
+                    </tr>
+                </tbody >
+            </table>
+            <div class="mt-2 d-flex justify-content-center " >
+              <ul class="list-unstyled">
+                <li><b>Total Amount:</b>&nbsp;&nbsp;&#8377; 25.00</li>
+                <li><b>Tax(2.5%):</b>&nbsp;&nbsp;&#8377; 25.00</li>
+                <li><b>Net Amount:</b>&nbsp;&nbsp;&#8377; 25.00</li>
+              </ul>
+
+          </div>
+        </div>
+    </div> -->
+</div>
+
+<div class="p-5"></div>
+<footer class="bg-light py-4 fixed-bottom">
+  <!-- Footer Content Here -->
+  <div class="container text-center">
+      <p>&copy; 2023 SellHere. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- Add Bootstrap JS and Popper.js links (for Bootstrap components) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+<script src="/js/orderHistory.js"></script>
+</body>
+</html>
+
