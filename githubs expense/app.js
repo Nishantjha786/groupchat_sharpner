@@ -28,6 +28,9 @@ app.use(express.static('public'));
 
  User.hasMany(Expenses);
  Expenses.belongsTo(User,{constraints:true, onDelete:'CASCADE'});
+ const PremiumUser = require('./models/premium-user');
+ User.hasOne(PremiumUser);
+PremiumUser.belongsTo(User);
 
 const expenseRouter = require('./routes/expenses');
 //app.use(ExpensePageRouter);

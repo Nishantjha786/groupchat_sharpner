@@ -1,12 +1,12 @@
 const User = require('../models/user');
-//const PremiumUser = require('../models/premium-user');
+const PremiumUser = require('../models/premium-user');
 //const Download = require('../models/download');
 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { regexpToText } = require('nodemon/lib/utils');
 const saltRounds = 10;
-//const Razorpay = require('razorpay');
+const Razorpay = require('razorpay');
 
 exports.addUser = (req, res, next) => {
     const {name, email, password} = req.body;
@@ -76,7 +76,7 @@ exports.logUser = (req, res, next) => {
 
 exports.makePremium = async (req, res, next) => {
     try {
-        var instance = new Razorpay({ key_id: process.env.RZP_KEY_ID, key_secret: process.env.RZP_KEY_SECRET });
+        var instance = new Razorpay({ key_id: 'rzp_test_25Hg3zwc4Lr3NK', key_secret: 'qFs3fQQe6UeNH6P4UIAscXE9' });
     
         let order = await instance.orders.create({
           amount: 50000,
@@ -98,3 +98,28 @@ exports.makePremium = async (req, res, next) => {
         res.status(500).json({success: false, error: error});
     }  
 };
+
+exports.updateTransactionStatus = async (req, res) => {
+    
+    try {
+        const {order_id, payment_id} = req.body;
+
+        const premiumUser = await PremiumUser.findOne({where: {orderId: order_id}});
+
+        premiumUser.update({paymentId: payment_id, status: 'SUCCESSFUL'})
+            .then(() => {
+                return req.user.update({isPremiumUser: true});
+            })
+            .then(() => {
+                res.status(202).json({success: true, message: 'transaction successful'});
+            })
+            .catch(err => {
+                throw new Error(err);
+            });
+        
+    } catch (error) {
+        console.log(error);
+        res.status(403).json({success: false, message: 'something went wrong', err: error});
+    }
+};
+
