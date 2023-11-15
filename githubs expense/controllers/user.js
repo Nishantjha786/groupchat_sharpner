@@ -122,4 +122,44 @@ exports.updateTransactionStatus = async (req, res) => {
         res.status(403).json({success: false, message: 'something went wrong', err: error});
     }
 };
+exports.checkMembership = (req, res) => {
+    if(req.user.isPremiumUser === true) {
+        res.status(200).json({message: 'user has Premium Membership'});
+    } else {
+        res.status(404).json({message: 'user does not have Premium Membership'});
+    }
+};
+
+exports.getDownloads = async (req, res) => {
+    if(req.user.isPremiumUser) {
+        try {
+            const downloads = await req.user.getDownloads();
+            console.log(downloads);
+            res.status(200).json({downloads: downloads, success: true});
+        } catch (error) {
+            res.status(500).json({error: error, success: false});
+        }
+    } else {
+        res.status(400).json({message: 'user does not have Premium Membership'});
+    }
+};
+
+exports.getExpansion = (req, res) => {
+    if(req.user.isPremiumUser) {
+        const id = req.params.id;
+
+        User.findByPk(id)
+            .then(user => {
+                return user.getExpenses();
+            })
+            .then(expenses => {
+                res.status(200).json({success: true, expenses: expenses});
+            })
+            .catch(err => {
+                res.status(500).json({success: false, error: err});
+            })
+    } else {
+        res.status(400).json({message: 'user does not have Premium Membership'});
+    }
+}
 

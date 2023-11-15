@@ -4,22 +4,28 @@ const Expense = require('../models/expense');
 const User = require('../models/user');
 const { Op } = require('sequelize');
 //const AWS= require('aws-sdk');
+const sequelize = require('../util/database');
 
 exports.addExpense = async(req, res, next) => {
     const {amount, description, category} = req.body;
     console.log("<<<<<<<entered add expense controller>>>>>>>>");
-    let transaction;
+   // let transaction;
     console.log(amount, description, category);
-
+    //let transaction;
     try {
-        console.log("@@@@@@@@@@  req.user got from authenticate function is @@@@@@@@@@@ ");
+        transaction = await sequelize.transaction();
+        console.log("@@@@@@@@@@  req.user got from authenticate Fn @@@@@@@@@@@ ");
         console.log(req.user);
-        await req.user.createExpense1({
+        await req.user.createExpense({
             amount: amount,
             description: description,
             category: category
-        },{ transaction });
-        console.log("@@@@@@@@@@ exit from create expense function is @@@@@@@@@@@ ");
+        });
+
+        const totalExpenses = await Expense.sum('amount', { where: { userId: req.user.id } });
+        console.log("&&&&&&&&&total expense is $$$$$$$$$",totalExpenses);
+         req.user.update({ totalexpenses: totalExpenses });
+        console.log("@@@@@@@@@@ exit from create expense controller @@@@@@@@@@@ ");
 
         res.status(200).json({success: true, message: '@@@@@@@@@@  expense successfully added  @@@@@@@@@@@'});
         
@@ -42,12 +48,12 @@ exports.getExpense = (req, res, next) => {
     //     offset: (page - 1)*(ITEMS_PER_PAGE), 
     //     limit: ITEMS_PER_PAGE
     //   })
-    console.log("Request.user  is",req.user);
-    Expense.findAll({where:{User1Id:req.user.id}})
+   // console.log("Request.user  is",req.user);
+    Expense.findAll({where:{userId:req.user.id}})
         .then(limitedExpenses => {
             // res.status(200).json(limitedExpenses);
-            console.log('<<<<<<<<limited expenses----->', limitedExpenses);
-            totalItems =  Expense.count({where: {User1Id: req.user.id}});
+         //   console.log('<<<<<<<<limited expenses----->', limitedExpenses);
+            totalItems =  Expense.count({where: {userId: req.user.id}});
 
             lastPage = Math.ceil(totalItems / ITEMS_PER_PAGE);
             if(lastPage === 0) {
@@ -88,7 +94,74 @@ exports.deleteExpense = (req, res, next) => {
             res.status(500).json(err);
         });
 };
+exports.getLeaderboradData = async (req, res, next) => {
+    try {
+        const leaderboard = await User.findAll({
+          attributes: ['id', 'name', 'totalExpenses'],
+          order: [['totalExpenses', 'DESC']],
+          limit:10
+        });
+        return res.status(200).json(leaderboard);
+      } catch (error) {
+        console.error(error);
+        return res.status(401).json({ message: 'Unauthorized - please relogin' });
+      }
+    // if(req.user.isPremiumUser === true) {
+        
+    //     User.findAll({
+    //         where: {
+    //             id: {
+    //               [Op.not]: req.user.id
+    //             }
+    //           }
+    //     })
+    //         .then(async (users) => {
+    //             let leaderboardData = [];
+    //             try {
+    //                 for(let i = 0; i < users.length; i ++) {
+    //                     let userData = {user: users[i]};
+    //                     let expenses = await users[i].getExpense();
+    //                     // console.log(expenses);
+    //                     userData['expenses'] = expenses;
+    //                     leaderboardData.push(userData);
+    //                 }
+    //             } catch (error) {
+    //                 throw new Error(error);
+    //             }
+    //             // console.log(leaderboardData);
+    //             res.status(200).json(leaderboardData);
+    //         })
+    //         .catch(err => {
+    //             console.log(err);
+    //             res.status(500).json({success: false, error: err});
+    //         })
+    // } else {
+    //     res.status(403).json({success: false, message: 'user does not premium membership'});
+    // }
+};
 
+exports.downloadExpense = async (req, res) => {
+    if(req.user.isPremiumUser) {
+        try {
+            const expenses = await req.user.getExpenses();
+            console.log(expenses);
+                                                //  file name  //                           //  data    //
+            const fileUrl = await uploadToS3(`${req.user.id}_${new Date()}_expenses.csv`, JSON.stringify(expenses));
+
+            // console.log('fileUrl>>>>>', fileUrl);
+            await req.user.createDownload({fileUrl: fileUrl, date: new Date()});
+
+            res.status(201).json({fileUrl: fileUrl, success: true});
+            
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({error, status: false});
+        }
+
+    }else {
+        res.status(401).json({success: false, message: 'user does not have Premium Membership'});
+    }
+}
 
 // const Expenses = require('../models/expenses.js');
 // const sequelize = require('../util/database.js');

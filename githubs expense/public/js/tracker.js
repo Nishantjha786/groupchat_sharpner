@@ -32,15 +32,17 @@ console.log("<<<<<<<<<add expense clicked!!!>>>>>")
 });
 
 window.addEventListener('DOMContentLoaded', async () => {
-   // checkForPremium();
+
+    console.log("<<<<<<<<<Entered DOM content reloaded Fn>>>>>>");
+   checkForPremium();
 
     // const url = window.location.search;
     // const page = url.replace('?', '');
 
     // console.log('page->', page);
-    console.log("<<<<<<<<<Entered DOM content reloaded Fn>>>>>>");
+    
     const response = await fetchExpensesFromBackend(1);
-    console.log(response);
+    console.log("<<<<<<<response from fetch expense from backend Fn>>>>>",response);
     
     const expenses = response.expenses;
 
@@ -70,6 +72,7 @@ expenseItems.addEventListener('click', async (e) => {
 });
 
 function showExpensesOnFrontend(expenses) {
+    console.log("<<<<Entered show expesne from backend>>>>>>>>>>");
     console.log('expenses: ', expenses);
 
     expenseItems.innerHTML = '';
@@ -84,15 +87,17 @@ function showExpensesOnFrontend(expenses) {
             </li>
         `;
     }    
+    console.log("<<<<Exit show expesne from backend>>>>>>>>>>");
 };
 
 async function fetchExpensesFromBackend(pageNo) {
     try {
+        console.log("<<<<<<<<<Entered fetchExpensesFromBackend Fn>>>>>>");
         let rows = localStorage.getItem('rows');
         if(!rows) {
             rows = 5;
         }
-        console.log("<<<<<<<<<Entered fetchExpensesFromBackend Fn>>>>>>");
+       
         // const response = await axios.get(`http://localhost:4000/expense/get-expense`, {
         //     headers: {
         //         'Authorization': localStorage.getItem('token')
@@ -180,10 +185,12 @@ document.getElementById('rzp-button1').onclick = async function (e) {
 
 function applyDarkTheme() {
     const body = document.body;
-    body.classList.add('dark-mode');
+    body.classList.add('light-mode');
 }
 
 async function checkForPremium() {
+
+    console.log('<<<<<,Entered check for permeium Fn>>');
     try {
         const token = localStorage.getItem('token');
         const response = await axios.post(`http://localhost:4000/user/check-membership`, {}, {
@@ -199,7 +206,7 @@ async function checkForPremium() {
             document.getElementById('downloadexpense').style.display = "block";
             document.getElementById('prevDownloads-div').style.display = "block";
         }
-
+        console.log('<<<<<Exit check for permeium Fn>>');
     } catch (error) {
         console.log(error);
     }
@@ -207,6 +214,7 @@ async function checkForPremium() {
 
 async function addLeaderboard() {
     try {
+        console.log('<<<<<<<<<<Entered addLeaderboard Fn in /view/js file>>>>>>> :');
         document.getElementById('leaderboard-div').style.display = "block";
         const leaderboard = document.getElementById('leaderboard');
         const response = await axios.get(`http://localhost:4000/expense/get-leaderboard`, {
@@ -215,25 +223,28 @@ async function addLeaderboard() {
             }
         });
         
-        // console.log('leaderboard data :', response.data);
+        console.log('<<<<<<<<<<leaderboard data>>>>>>> :', response.data);
         leaderboard.innerHTML = '';
-
+var i = 1;
         response.data.forEach(userData => {
-            // console.log(userData);
-            let totalExpense = 0;
-            const user = userData.user;
-            const expenseList = userData.expenses;
+            console.log("<<<<<<<<leaderboard count is>>>>>>>",i++);
+             console.log("<<<<<<<<user data in for each loop>>>>>>>",userData);
 
-            expenseList.forEach(expense => {
-                totalExpense += expense.amount;
-            });
+            // let totalExpense = 0;
+            // const user = userData.user;
+            // const expenseList = userData.expenses;
 
-            // console.log(user.name, totalExpense);
+            // expenseList.forEach(expense => {
+            //     totalExpense += expense.amount;
+            // });
+
+            console.log(userData.totalExpenses);
 
             leaderboard.innerHTML += `
-                <li id="${user.id}">${user.name}-${totalExpense}<button>View Details</button></li>
+                <li id="${userData.id}">${userData.name}-${userData.totalExpenses}<button>View Details</button></li>
             `;
         });
+        console.log('<<<<<<<<<<Exit addLeaderboard Fn in /view/js file>>>>>>> :');
     } catch (error) {
         console.log(error);
     }
@@ -247,7 +258,7 @@ async function showPreviousDownloads() {
                 'Authorization': localStorage.getItem('token')
             }
         });
-        // console.log('response---->',response);
+        console.log('response---->',response);
         downloads.innerHTML = '';
 
         response.data.downloads.forEach(download => {

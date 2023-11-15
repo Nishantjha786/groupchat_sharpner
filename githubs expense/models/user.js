@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 
 const data_base = require('../util/database');
 
-const User = data_base.define('user1', {
+const User = data_base.define('user', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -19,6 +19,10 @@ const User = data_base.define('user1', {
         allowNull: false
     },
     password: Sequelize.STRING,
+    totalexpenses:{
+        type:Sequelize.FLOAT(),
+        defaultValue:0.00   
+    },
     isPremiumUser: Sequelize.BOOLEAN
 });
 
