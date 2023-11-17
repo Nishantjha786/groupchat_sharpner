@@ -7,11 +7,12 @@ const { Op } = require('sequelize');
 const sequelize = require('../util/database');
 
 exports.addExpense = async(req, res, next) => {
+    
     const {amount, description, category} = req.body;
     console.log("<<<<<<<entered add expense controller>>>>>>>>");
-   // let transaction;
+    let transaction;
     console.log(amount, description, category);
-    //let transaction;
+   
     try {
         transaction = await sequelize.transaction();
         console.log("@@@@@@@@@@  req.user got from authenticate Fn @@@@@@@@@@@ ");
@@ -20,16 +21,20 @@ exports.addExpense = async(req, res, next) => {
             amount: amount,
             description: description,
             category: category
-        });
+        }, { transaction });
 
-        const totalExpenses = await Expense.sum('amount', { where: { userId: req.user.id } });
+        const totalExpenses = await Expense.sum('amount', { where: { userId: req.user.id },transaction  });
         console.log("&&&&&&&&&total expense is $$$$$$$$$",totalExpenses);
-         req.user.update({ totalexpenses: totalExpenses });
+        await req.user.update({ totalexpenses: totalExpenses }, { transaction });
+         await transaction.commit();
         console.log("@@@@@@@@@@ exit from create expense controller @@@@@@@@@@@ ");
 
         res.status(200).json({success: true, message: '@@@@@@@@@@  expense successfully added  @@@@@@@@@@@'});
         
     } catch (error) {
+        if (transaction) {
+            await transaction.rollback();
+        }
         res.status(500).json({success: false, message: error});
     }
 };

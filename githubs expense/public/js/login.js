@@ -46,5 +46,6 @@ function clearError() {
 };
 
 forgotBtn.onclick = async (e) => {
-    window.location.href = 'forgot.html';
+    console.log("<<<<forgot button clicked>>>")
+    window.location.href = '/password/forgotpassword';
 }

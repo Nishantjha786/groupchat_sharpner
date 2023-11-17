@@ -8,12 +8,14 @@ const express = require('express');
 
 const Expenses = require('./models/expense');
  const User = require('./models/user');
+ const Forgotpassword = require('./models/forgot-password');
 // const Orders = require('./models/orders');
 // const Forgotpasswords = require('./models/forgotpasswords');
 // const Downloads = require('./models/downloads');
 
  const mainPageRouter = require('./routes/mainpage');
 const userRouter = require('./routes/user');
+const passwordRouter = require('./routes/password');
 //const expenseRouter = require('./routes/expenses');
 // const purchaseRouter = require('./routes/purchase');
 // const premiumRouter = require('./routes/premium');
@@ -32,9 +34,15 @@ app.use(express.static('public'));
  User.hasOne(PremiumUser);
 PremiumUser.belongsTo(User);
 
+User.hasMany(Forgotpassword);
+Forgotpassword.belongsTo(User);
+
 const expenseRouter = require('./routes/expenses');
 //app.use(ExpensePageRouter);
 app.use('/user',userRouter);
+const passwordController = require('./controllers/password');
+app.use('/password',passwordRouter);
+app.get('/password/forgotpassword',passwordController.requestresetpassword);
 
 const expenseController = require('./controllers/expense');
 
