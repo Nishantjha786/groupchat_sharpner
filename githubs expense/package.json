@@ -14,6 +14,7 @@
     "nodemon": "^1.18.3"
   },
   "dependencies": {
+    "aws-sdk": "^2.1499.0",
     "bcrpyt": "^2.0.0",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
@@ -30,6 +31,5 @@
     "razorpay": "^2.9.2",
     "sequelize": "^6.33.0",
     "sib-api-v3-sdk": "^8.5.0"
-    
   }
 }

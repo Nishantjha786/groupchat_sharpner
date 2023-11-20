@@ -1,9 +1,9 @@
 
 const Expense = require('../models/expense');
-//const Download = require('../models/download');
+const Download = require('../models/download');
 const User = require('../models/user');
 const { Op } = require('sequelize');
-//const AWS= require('aws-sdk');
+const AWS= require('aws-sdk');
 const sequelize = require('../util/database');
 
 exports.addExpense = async(req, res, next) => {
@@ -149,14 +149,13 @@ exports.downloadExpense = async (req, res) => {
     if(req.user.isPremiumUser) {
         try {
             const expenses = await req.user.getExpenses();
-            console.log(expenses);
+            console.log("<<<<<epenses are>>>>>>>",expenses);
                                                 //  file name  //                           //  data    //
             const fileUrl = await uploadToS3(`${req.user.id}_${new Date()}_expenses.csv`, JSON.stringify(expenses));
+console.log('<<<<<<<<<<fileUrl>>>>>', fileUrl);
+          await req.user.createDownload({fileUrl: fileUrl, date: new Date()});
 
-            // console.log('fileUrl>>>>>', fileUrl);
-            await req.user.createDownload({fileUrl: fileUrl, date: new Date()});
-
-            res.status(201).json({fileUrl: fileUrl, success: true});
+            res.status(201).json({fileUrl: fileUrl});
             
         } catch (error) {
             console.log(error);
@@ -251,3 +250,28 @@ exports.downloadExpense = async (req, res) => {
 // //     }); 
     
 // // }
+function uploadToS3(fileName, data) {
+    const s3 = new AWS.S3({
+        accessKeyId: 'AKIAVUQ6UOKUVE2T7EGO',
+        secretAccessKey: '9Btrb+64RDkl/4osJtRWa45/vD+TLzKOmX8CuAq/'
+    });
+
+    const params = {
+        Bucket: 'nkj-my-upload', // pass your bucket name
+        Key: fileName, // file will be saved as expense-tracker-archie/<fileName>
+        Body: data,
+        ACL: 'public-read'
+    };
+
+    return new Promise((resolve, reject) => {
+
+        s3.upload(params, (s3Err, response) => {
+            if (s3Err){
+                reject(s3Err);
+            } else {
+                // console.log(`File uploaded successfully at ${response.Location}`);
+                resolve(response.Location);
+            }
+        });
+    })
+}

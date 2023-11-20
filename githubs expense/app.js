@@ -9,6 +9,8 @@ const express = require('express');
 const Expenses = require('./models/expense');
  const User = require('./models/user');
  const Forgotpassword = require('./models/forgot-password');
+
+ const Download = require('./models/download') ;
 // const Orders = require('./models/orders');
 // const Forgotpasswords = require('./models/forgotpasswords');
 // const Downloads = require('./models/downloads');
@@ -36,6 +38,10 @@ PremiumUser.belongsTo(User);
 
 User.hasMany(Forgotpassword);
 Forgotpassword.belongsTo(User);
+
+User.hasMany(Download);
+Download.belongsTo(User);
+
 
 const expenseRouter = require('./routes/expenses');
 //app.use(ExpensePageRouter);
