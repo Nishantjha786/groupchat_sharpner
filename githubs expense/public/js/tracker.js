@@ -8,7 +8,7 @@ const expansionDiv = document.getElementById('expansion');
 
 trackerFrom.addEventListener('submit', async(e) => {
     e.preventDefault();
-    console.log('frontend: ',amount.value, description.value, category.value);
+    console.log('********frontend:************ ',amount.value, description.value, category.value);
 console.log("<<<<<<<<<add expense clicked!!!>>>>>")
     try {   
         await axios.post(`http://localhost:4000/expense/add-expense`, {
@@ -106,7 +106,7 @@ async function fetchExpensesFromBackend(pageNo) {
 const token =   localStorage.getItem('token');
 console.log("<<<<<<<token in local storage in tracker js file is>>>>>>>", token);
 //const addresponse = await axios.post("expenses/addexpense", data,{headers:{"Authorization":token}});
-        const response = await axios.get(`http://localhost:4000/expense/get-expense/?page=${pageNo}`,{headers:{"Authorization":token}});
+        const response = await axios.get(`http://localhost:4000/expense/get-expense/?page=${pageNo}`,{headers:{"Authorization":token, 'rows': rows}});
         console.log("<<<<<<<<<response from /expense/getexpense>>>>>>");
         console.log(response);
  

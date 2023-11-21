@@ -49,16 +49,16 @@ exports.getExpense = (req, res, next) => {
     const ITEMS_PER_PAGE = 5;
     console.log('items per page------> ', ITEMS_PER_PAGE)
     
-    // req.user.getExpenses({
-    //     offset: (page - 1)*(ITEMS_PER_PAGE), 
-    //     limit: ITEMS_PER_PAGE
-    //   })
+    req.user.getExpenses({
+        offset: (page - 1)*(ITEMS_PER_PAGE), 
+        limit: ITEMS_PER_PAGE
+      })
    // console.log("Request.user  is",req.user);
-    Expense.findAll({where:{userId:req.user.id}})
-        .then(limitedExpenses => {
+  ///  Expense.findAll({where:{userId:req.user.id}})
+        .then( async limitedExpenses => {
             // res.status(200).json(limitedExpenses);
          //   console.log('<<<<<<<<limited expenses----->', limitedExpenses);
-            totalItems =  Expense.count({where: {userId: req.user.id}});
+            totalItems =  await Expense.count({where: {userId: req.user.id}});
 
             lastPage = Math.ceil(totalItems / ITEMS_PER_PAGE);
             if(lastPage === 0) {
