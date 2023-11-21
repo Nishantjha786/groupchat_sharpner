@@ -80,6 +80,6 @@ const router = express.Router();
 // app.listen(4000);
 sequelize.sync()
     .then(() => {
-        app.listen(process.env.PORT || 4000);
+        app.listen( 4000);
     })
     .catch(err => console.log(err));

@@ -11,7 +11,7 @@ const Sib = require('sib-api-v3-sdk');
 require('dotenv').config();
 
 
-//console.log("process env key is",process.env.SIB_API_KEY)
+
 const uuid = require('uuid');
 const bcrypt = require('bcrypt');
 

@@ -6,7 +6,8 @@ exports.authenticate = (req, res, next) => {
     try {
         const token = req.header('Authorization');
          console.log(' <<<<<<<<<TOKEN in authenticate middleware>>>>>>>>', token);
-
+         console.log("<<<<<<process env key in auth.js>>>>>>>>>>",process.env.SEC_KEY)
+         const key= process.env.SEC_KEY;
         const tokenUser = jwt.verify(token, 'archie_jwt_secret_key');
          console.log('<<<<<<<<<DECRYPTED User got from token in authenticate middleware  >>>>>>>', tokenUser);
 

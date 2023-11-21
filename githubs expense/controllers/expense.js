@@ -252,6 +252,8 @@ console.log('<<<<<<<<<<fileUrl>>>>>', fileUrl);
 // // }
 function uploadToS3(fileName, data) {
     const s3 = new AWS.S3({
+        // accessKeyId: process.env.S3_ACCESS_KEY_ID,
+        // secretAccessKey: process.env.S3_SECRET_ACCESS_KEY
         accessKeyId: 'AKIAVUQ6UOKUVE2T7EGO',
         secretAccessKey: '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'
     });
