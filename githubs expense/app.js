@@ -1,8 +1,12 @@
-
+const fs = require('fs');
+const path = require('path');
 const express = require('express');
 // const cors = require('cors');
 // require('dotenv').config();
  const sequelize = require('./util/database');
+ const helmet = require('helmet');
+ const compression = require('compression');
+ const morgan = require('morgan');
 
 // const PORT = process.env.PORT;
 
@@ -22,9 +26,15 @@ const passwordRouter = require('./routes/password');
 // const purchaseRouter = require('./routes/purchase');
 // const premiumRouter = require('./routes/premium');
 // const passwordRouter = require('./routes/password');
+const accessLogStream = fs.createWriteStream(
+    path.join(__dirname, 'access.log'),
+    {flags: 'a'}
+);
 
 const app = express();
-//app.use(cors());
+app.use(helmet());
+app.use(compression());
+app.use(morgan('combined', {stream: accessLogStream}));
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use(express.static('public'));
