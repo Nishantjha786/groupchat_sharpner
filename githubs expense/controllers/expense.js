@@ -110,39 +110,10 @@ exports.getLeaderboradData = async (req, res, next) => {
       } catch (error) {
         console.error(error);
         return res.status(401).json({ message: 'Unauthorized - please relogin' });
-      }
-    // if(req.user.isPremiumUser === true) {
+
         
-    //     User.findAll({
-    //         where: {
-    //             id: {
-    //               [Op.not]: req.user.id
-    //             }
-    //           }
-    //     })
-    //         .then(async (users) => {
-    //             let leaderboardData = [];
-    //             try {
-    //                 for(let i = 0; i < users.length; i ++) {
-    //                     let userData = {user: users[i]};
-    //                     let expenses = await users[i].getExpense();
-    //                     // console.log(expenses);
-    //                     userData['expenses'] = expenses;
-    //                     leaderboardData.push(userData);
-    //                 }
-    //             } catch (error) {
-    //                 throw new Error(error);
-    //             }
-    //             // console.log(leaderboardData);
-    //             res.status(200).json(leaderboardData);
-    //         })
-    //         .catch(err => {
-    //             console.log(err);
-    //             res.status(500).json({success: false, error: err});
-    //         })
-    // } else {
-    //     res.status(403).json({success: false, message: 'user does not premium membership'});
-    // }
+      }
+    
 };
 
 exports.downloadExpense = async (req, res) => {
@@ -167,89 +138,7 @@ console.log('<<<<<<<<<<fileUrl>>>>>', fileUrl);
     }
 }
 
-// const Expenses = require('../models/expenses.js');
-// const sequelize = require('../util/database.js');
-// const Userservices = require('../services/userservices.js');
-// var express = require('express');
-// var app = express();
-// exports.addExpenses = async (request, response, next) => {
-//     console.log("entered add expense function");
-//     let transaction;
-//     try {
-//         transaction = await sequelize.transaction();
 
-//         const user = request.user;
-//         console.log("user in authenticte function is ");
-//         console.log(user);
-//         const { category, pmethod, amount, date } = request.body;
-// console.log(category);
-// console.log(date);
-// await user.createExpense({
-//     category: category,
-//     pmethod: pmethod,
-//     amount: amount,
-//     date: date
-// }, { transaction });
-//         // const expense = await Userservices.createExpense(category, pmethod,amount,date);
-//       const totalExpenses = await Expenses.sum('amount', { where: { UserId: user.id }, transaction });
-//      await user.update({ totalexpenses: totalExpenses }, { transaction });
-//         await transaction.commit();
-//         response.status(200).json({ message: 'Data successfully added' });
-
-//     } catch (error) {
-//         console.log(error);
-//         if (transaction) {
-//             await transaction.rollback();
-//         }
-//         response.status(500).json({ message: 'An error occurred' });
-//     }
-// }
-// exports.getExpenses = async (request, response, next) => {
-//     console.log("entered get expense function");
-//     let transaction;
-//     try {
-//       //  transaction = await sequelize.transaction();
-
-//         const user = request.user;
-//         console.log("user got from in authenticte function in get expense fn is ");
-//         console.log(user);
-//     Expenses.findAll({where:{UserId:user.id}}).then(result => {
-//                  app.set('view engine', 'ejs');
-//                  response.render('main',{root:'views',title:'node js',action:'list',sampleData:result});
-//                 console.log(result);
-//              //    app.render('/user-list', { title: 'User List', userData: result });
-                 
-//              }).catch((error) => {
-//                  console.error('Failed to retrieve data : ', error);
-//              }); 
-        
-//             }
-
-//              catch (error) {
-//                 console.log(error);
-//                 if (transaction) {
-//                     await transaction.rollback();
-//                 }
-//                 response.status(500).json({ message: 'An error occurred' });
-//             }
-// }
-
-// // exports.getExpenses = (request, response, next) => {
-// //     const user = request.user;
-// //     //console.log(user);
-// //     console.log("Entered get expense function!!!");
-// // 	  Expenses.findAll({where:{userId:6}}).then(result => {
-// //         app.set('view engine', 'ejs');
-// //        // response.render('../tracker',{title:'node js',action:'list',sampleData:result});
-// //        // response.sendFile('tracker.ejs',{ root: 'views'});// ,title:'node js',action:'list',sampleData:result});
-// //         console.log(result);
-// //     //    app.render('/user-list', { title: 'User List', userData: result });
-        
-// //     }).catch((error) => {
-// //         console.error('Failed to retrieve data : ', error);
-// //     }); 
-    
-// // }
 function uploadToS3(fileName, data) {
     const s3 = new AWS.S3({
         // accessKeyId: process.env.S3_ACCESS_KEY_ID,

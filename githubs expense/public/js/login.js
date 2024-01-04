@@ -1,12 +1,15 @@
+//import axios from 'axios';
 const myForm = document.getElementById('log-in-form');
 // const name = document.getElementById('name');
 const email = document.getElementById('email');
 const password = document.getElementById('password');
 const forgotBtn = document.getElementById('fgt-btn');
+// const axios = require('axios');
+
 
 myForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    console.log('<<<login BUTTON CLIKED>>.');
+    console.log('<<<login BUTTON CLIKED here>>>>>>>>.');
     try {
         const res = await axios.post(`http://localhost:4000/user/login`, 
             {
@@ -14,7 +17,7 @@ myForm.addEventListener('submit', async (e) => {
                 password: password.value
             }
         );
-        console.log('LOGIN RESPONSE: ', res);
+        console.log('>>>>>>>>>>LOGIN RESPONSE is:>>>>>>>>>> ', res);
         if(res.status === 200) {
             clearError();
             email.value = '';

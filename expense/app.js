@@ -6,10 +6,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 const db  =  require('./connection');
 
-const userRoutes = require('./routes/user');
+//const userRoutes = require('./routes/user');
 
-const User = require('./model/user');
-const userController = require('./controllers/user');
+//const User = require('./model/user');
+//const userController = require('./controllers/user');
 
 
 app.get('/login',function(req,res){
